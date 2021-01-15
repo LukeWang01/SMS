@@ -1,0 +1,21 @@
+public void select_c(double l,double b,double z,double x,double y){double c1=0,c2=0,c3=0,c4=0,ac=0;
+		double po;Item31 item31 = new Item31();
+		if(l<0||b<0){JOptionPane.showMessageDialog(null, "l和b不能小于0！", "数据错误", //此处提示，避免空值
+JOptionPane.ERROR_MESSAGE);
+		}else{c1 = item31.calculate(0, z, Math.abs(x), Math.abs(y));c2 = item31.calculate(0, z, Math.abs(x), Math.abs(y-b));c3 = item31.calculate(0, z, Math.abs(l-x), Math.abs(y));c4 = item31.calculate(0, z, Math.abs(l-x), Math.abs(y-b));}
+		if((x>=0&&x<=l) && (y>=0&&y<=b)){
+			ac = c1 + c2 + c3 + c4;}
+		if((x>0&&x<l) && (y>b||y<0)){
+			ac = Math.abs(c1 - c2) + Math.abs(c3 - c4);}
+		if((x<0||x>l) && (y>0&&y<b)){
+			ac = Math.abs(c1 - c3) + Math.abs(c2 - c4);}
+		if((x>l||x<0)&&(y<0||y>b)){
+			ac = Math.abs(c1 - c2 - c3 + c4);
+		}//将情形4，6及情形5,7合并计算
+		po = Double.parseDouble(edit_po.getText());
+		this.calculate(ac, po);}
+	public void calculate(double ac,double po){	
+		double dz;
+		dz = ac*po;
+		res_t1.setText(String.valueOf(ac));
+		res_z1.setText(String.valueOf(dz));}
