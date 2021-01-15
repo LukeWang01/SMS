@@ -1,0 +1,37 @@
+void trans(double l,double b,double y,double d,double f,double dx,double yg,double tu){
+		Item31 item31 = new Item31();
+		n = tu;    //记录下土的性质及对应取值，在second_calculate中用到
+		length = l/2;width = b/2;
+	double a = 4*(item31.calculate(0, 0, length, width));
+		σcz = y*d;
+		σz0 = (f+yg*l*b*d)/(l*b)-y*d;
+		m = σz0;  z = 0;
+		di = d*10;   //乘以10来减少浮点数精度误差
+		dxi = dx*10;
+	void first_calculate(double h,double y){
+		Item31 item31 = new Item31();
+		double a,ave_σz,ave_σcz,b_σcz;
+		b_σcz = σcz;
+		z = z + h;
+		if(z*10<=dxi-di){σcz = σcz + y*h;
+		}else{σcz = σcz + (y-10)*h;}
+		a = 4 * item31.calculate(0, z, length, width);
+		σz = a * σz0;
+		ave_σcz = (σcz+b_σcz)/2;
+		ave_σz = (σz+m)/2;
+		m = a * σz0;
+	table.setValueAt(ave_σcz, i, 8);//ave_σcz即是p1
+	table.setValueAt(ave_σcz+ave_σz, i, 10);//ave_σcz+ave_σz就是p2}
+	void second_calculate(double e1,double e2){
+		double ds;   //记录每层的沉降量
+		ds = ((e1-e2)/(1+e1))*h;
+		s = s + ds;
+		table.setValueAt(e1, i, 11);
+		table.setValueAt(e2, i, 12);
+		table.setValueAt(ds*100, i, 13);
+		i++;
+		if(σz/σcz <= n){
+			total.setText(String.valueOf(s*100));
+			JOptionPane.showMessageDialog(null, "计算已完成", "结束提示", JOptionPane.INFORMATION_MESSAGE);
+		}else{JOptionPane.showMessageDialog(null, "点击确定进行下一层运算", "继续提示", JOptionPane.INFORMATION_MESSAGE);
+			total.setText(String.valueOf(s*100));}
